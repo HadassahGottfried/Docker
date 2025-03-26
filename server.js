@@ -1,15 +1,10 @@
 const express = require('express');
 const { Storage } = require('@google-cloud/storage');
 const app = express();
-
-// הגדרת הפורט לפי משתנה הסביבה
 const PORT = process.env.PORT || 8080;
-
-// הגדרת שם הדלי (Bucket) שלך
 const bucketName = 'hadassah-bucket-docker';
 const storage = new Storage();
 
-// פונקציה לרשום קבצים מתוך הדלי
 async function listFiles() {
   try {
     const [files] = await storage.bucket(bucketName).getFiles();
@@ -20,7 +15,6 @@ async function listFiles() {
   }
 }
 
-// דף ראשי שמציג את התמונות מתוך Google Cloud Storage
 app.get('/', async (req, res) => {
   try {
     const files = await listFiles();
@@ -44,7 +38,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-// שמיעת הבקשות על הפורט שנבחר
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
